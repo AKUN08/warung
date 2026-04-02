@@ -40,7 +40,8 @@
         </select>
 
         <label>Total Harga</label>
-        <input type="text" name="total" id="total" value="Rp8.000" readonly>
+        <input type="text" id="totalDisplay" value="Rp3.000" readonly>
+        <input type="hidden" name="total" id="total" value="3000">
 
         <label>Tanggal Pengambilan</label>
         <input type="date" id="tanggal"  name="tanggal" required>
@@ -53,7 +54,7 @@
 </div>
 
 <script>
-    const scriptURL = 'https://script.google.com/macros/s/AKfycbzKfOHbtvTEIAkAASH0u6lq1uJL7OXj8GxXv7kBLGX8XFhcJamqraBHt_igo_EtC6No-w/exec';
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbx_7RJ9XGDBSPommllR3xutc70T9iJ1vm5GcPHpPRAoDNluMnr3H-hMzOhJV0S6piP3zA/exec';
     const form = document.getElementById('orderForm');
 
     function updateHarga() {
@@ -78,26 +79,20 @@
     });
 
      function hitungTotal() {
-          
             const menuSelect = document.getElementById('menu');
             const jumlahInput = document.getElementById('jumlah');
-            const totalInput = document.getElementById('total');
+            const totalDisplay = document.getElementById('totalDisplay');
+            const totalHidden = document.getElementById('total');
 
-         
             const selectedOption = menuSelect.options[menuSelect.selectedIndex];
             const hargaSatuan = parseInt(selectedOption.getAttribute('data-harga'));
-
-            
             const jumlah = parseInt(jumlahInput.value);
-
-            
             const totalBayar = (jumlah > 0) ? hargaSatuan * jumlah : 0;
 
-            
-            totalInput.value = "Rp" + totalBayar.toLocaleString('id-ID');
+            totalDisplay.value = "Rp" + totalBayar.toLocaleString('id-ID');
+            totalHidden.value = totalBayar; // kirim angka bersih ke spreadsheet
         }
 
-     
         window.onload = hitungTotal;
 </script>
 
